@@ -9,9 +9,6 @@ namespace Reflex.Scripts.Core
     {
         private void Awake()
         {
-#if UNITY_EDITOR
-            UnityInjector.InitIfNotExist();
-#endif
             UnityStaticEvents.OnSceneEarlyAwake.Invoke(gameObject.scene);
         }
 

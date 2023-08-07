@@ -11,22 +11,6 @@ namespace Reflex.Injectors
 {
     internal static class UnityInjector
     {
-#if UNITY_EDITOR
-        private static bool _projectContextIsReady;
-
-        internal static void InitIfNotExist()
-        {
-            if (_projectContextIsReady)
-                return;
-
-            //ProjectContext prefab guid
-            var path = AssetDatabase.GUIDToAssetPath("6441163d2f294f04383dd08a4458fef6");
-            var contextPrefab = AssetDatabase.LoadAssetAtPath<ProjectContext>(path);
-            Object.Instantiate(contextPrefab);
-            _projectContextIsReady = true;
-        }
-#endif
-
         internal static void BeforeAwakeOfFirstSceneOnly(ProjectContext projectContext)
         {
             var projectContainer = CreateProjectContainer(projectContext);
@@ -35,10 +19,6 @@ namespace Reflex.Injectors
                 var sceneContainer = CreateSceneContainer(scene, projectContainer);
                 SceneInjector.Inject(scene, sceneContainer);
             };
-
-#if UNITY_EDITOR
-            _projectContextIsReady = true;
-#endif
         }
 
         private static Container CreateProjectContainer(ProjectContext projectContext)
